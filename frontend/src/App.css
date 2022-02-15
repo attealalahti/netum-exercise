@@ -1,5 +1,11 @@
-.App {
+.TableContainer {
     display: flex;
     justify-content: center;
     margin: 20px;
+}
+.TableContainer table {
+    max-width: 1000px;
+}
+.ButtonCell {
+    width: 30px;
 }

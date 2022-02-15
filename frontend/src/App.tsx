@@ -1,10 +1,10 @@
 import "./App.css";
-import Table from "./Table";
+import TableManager from "./TableManager";
 
 function App() {
     return (
         <div className="App">
-            <Table />
+            <TableManager />
         </div>
     );
 }
