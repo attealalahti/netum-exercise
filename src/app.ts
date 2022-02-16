@@ -8,3 +8,4 @@ const server = app.listen(port, () => {
 
 app.use(express.json());
 app.use("/people", people);
+app.use(express.static("frontend/build"));
