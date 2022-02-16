@@ -35,4 +35,18 @@ people.get("/:id([0-9]+)", (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.status(500).send(err);
     }
 }));
+people.delete("/:id([0-9]+)", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const info = (yield (0, crudrepository_1.deleteById)(Number(req.params.id)));
+        if (info.rowCount > 0) {
+            res.sendStatus(204);
+        }
+        else {
+            res.sendStatus(404);
+        }
+    }
+    catch (err) {
+        res.status(500).send(err);
+    }
+}));
 exports.default = people;
