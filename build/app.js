@@ -4,8 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const people_1 = __importDefault(require("./routes/people"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
     console.log(`Listening on port ${server.address().port}`);
 });
+app.use(express_1.default.json());
+app.use("/people", people_1.default);
