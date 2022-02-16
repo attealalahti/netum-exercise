@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { findAll, findById, deleteById, save } from "../database/crudrepository";
+import { findAll, findById, deleteById, save, update } from "../database/crudrepository";
 const people = Router();
 
 import { Validator } from "jsonschema";
@@ -43,9 +43,10 @@ people.delete("/:id([0-9]+)", async (req, res) => {
 const postSchema = {
     type: "object",
     properties: {
+        id: { type: "number", min: 0 },
         firstName: { type: "string" },
         lastName: { type: "string" },
-        age: { type: "number", min: 0 },
+        age: { type: "number" },
     },
     required: ["firstName", "lastName", "age"],
 };
@@ -67,4 +68,27 @@ people.post("/", async (req, res) => {
     }
 });
 
+const patchSchema = { ...postSchema, required: [...postSchema.required, "id"] };
+people.patch("/", async (req, res) => {
+    const validation = validator.validate(req.body, patchSchema);
+    if (validation.errors.length > 0) {
+        res.status(400).send(validation.errors);
+    } else {
+        try {
+            const info = (await update(
+                req.body.id,
+                req.body.firstName,
+                req.body.lastName,
+                req.body.age
+            )) as any;
+            if (info.rowCount > 0) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(404);
+            }
+        } catch (err) {
+            res.status(500).send(err);
+        }
+    }
+});
 export default people;
