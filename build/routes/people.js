@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const crudrepository_1 = require("../database/crudrepository");
 const people = (0, express_1.Router)();
+const jsonschema_1 = require("jsonschema");
+const validator = new jsonschema_1.Validator();
 people.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const all = yield (0, crudrepository_1.findAll)();
@@ -47,6 +49,30 @@ people.delete("/:id([0-9]+)", (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
     catch (err) {
         res.status(500).send(err);
+    }
+}));
+const postSchema = {
+    type: "object",
+    properties: {
+        firstName: { type: "string" },
+        lastName: { type: "string" },
+        age: { type: "number", min: 0 },
+    },
+    required: ["firstName", "lastName", "age"],
+};
+people.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const validation = validator.validate(req.body, postSchema);
+    if (validation.errors.length > 0) {
+        res.status(400).send(validation.errors);
+    }
+    else {
+        try {
+            const person = yield (0, crudrepository_1.save)(req.body.firstName, req.body.lastName, req.body.age);
+            res.status(201).send(person);
+        }
+        catch (err) {
+            res.status(500).send(err);
+        }
     }
 }));
 exports.default = people;
