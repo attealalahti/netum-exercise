@@ -30,7 +30,7 @@ const findById = (id) => new Promise((resolve, reject) => {
             reject(err);
         }
         else {
-            resolve(res.rows[0]);
+            resolve(res.rows);
         }
     });
 });

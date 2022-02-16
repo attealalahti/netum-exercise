@@ -21,4 +21,18 @@ people.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).send(err);
     }
 }));
+people.get("/:id([0-9]+)", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const person = (yield (0, crudrepository_1.findById)(Number(req.params.id)));
+        if (person.length > 0) {
+            res.send(person[0]);
+        }
+        else {
+            res.sendStatus(404);
+        }
+    }
+    catch (err) {
+        res.status(500).send(err);
+    }
+}));
 exports.default = people;

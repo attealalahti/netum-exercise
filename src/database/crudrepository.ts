@@ -26,7 +26,7 @@ export const findById = (id: number) =>
                 console.log(err);
                 reject(err);
             } else {
-                resolve(res.rows[0]);
+                resolve(res.rows);
             }
         });
     });
