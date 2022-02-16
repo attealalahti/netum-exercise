@@ -55,3 +55,18 @@ export const save = (firstName: string, lastName: string, age: number) =>
             }
         );
     });
+
+export const update = (id: number, firstName: string, lastName: string, age: number) =>
+    new Promise((resolve, reject) => {
+        pool.query(
+            "UPDATE people SET firstname = $1, lastname = $2, age = $3 WHERE id = $4",
+            [firstName, lastName, age, id],
+            (err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res);
+                }
+            }
+        );
+    });

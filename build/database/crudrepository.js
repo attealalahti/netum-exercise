@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.save = exports.deleteById = exports.findById = exports.findAll = void 0;
+exports.update = exports.save = exports.deleteById = exports.findById = exports.findAll = void 0;
 const pg_1 = require("pg");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -56,3 +56,14 @@ const save = (firstName, lastName, age) => new Promise((resolve, reject) => {
     });
 });
 exports.save = save;
+const update = (id, firstName, lastName, age) => new Promise((resolve, reject) => {
+    pool.query("UPDATE people SET firstname = $1, lastname = $2, age = $3 WHERE id = $4", [firstName, lastName, age, id], (err, res) => {
+        if (err) {
+            reject(err);
+        }
+        else {
+            resolve(res);
+        }
+    });
+});
+exports.update = update;
