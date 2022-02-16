@@ -40,3 +40,18 @@ export const deleteById = (id: number) =>
             }
         });
     });
+
+export const save = (firstName: string, lastName: string, age: number) =>
+    new Promise((resolve, reject) => {
+        pool.query(
+            "INSERT INTO people (firstname, lastname, age) VALUES ($1, $2, $3) RETURNING *",
+            [firstName, lastName, age],
+            (err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.rows[0]);
+                }
+            }
+        );
+    });
