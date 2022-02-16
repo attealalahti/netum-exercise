@@ -12,10 +12,21 @@ export const findAll = () =>
     new Promise((resolve, reject) => {
         pool.query("SELECT * FROM people", (err, res) => {
             if (err) {
-                console.log(err);
                 reject(err);
             } else {
                 resolve(res.rows);
+            }
+        });
+    });
+
+export const findById = (id: number) =>
+    new Promise((resolve, reject) => {
+        pool.query("SELECT * FROM people WHERE id = $1", [id], (err, res) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
+                resolve(res.rows[0]);
             }
         });
     });

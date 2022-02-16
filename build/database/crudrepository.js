@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findAll = void 0;
+exports.findById = exports.findAll = void 0;
 const pg_1 = require("pg");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -15,7 +15,6 @@ const pool = new pg_1.Pool({
 const findAll = () => new Promise((resolve, reject) => {
     pool.query("SELECT * FROM people", (err, res) => {
         if (err) {
-            console.log(err);
             reject(err);
         }
         else {
@@ -24,3 +23,15 @@ const findAll = () => new Promise((resolve, reject) => {
     });
 });
 exports.findAll = findAll;
+const findById = (id) => new Promise((resolve, reject) => {
+    pool.query("SELECT * FROM people WHERE id = $1", [id], (err, res) => {
+        if (err) {
+            console.log(err);
+            reject(err);
+        }
+        else {
+            resolve(res.rows[0]);
+        }
+    });
+});
+exports.findById = findById;
