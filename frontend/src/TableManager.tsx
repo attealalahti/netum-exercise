@@ -1,5 +1,3 @@
-import { Table, Button, DropdownButton, Dropdown } from "react-bootstrap";
-
 interface Person {
     firstName: string;
     lastName: string;
@@ -14,16 +12,15 @@ let db: Person[] = [
 function TableManager() {
     return (
         <div className="TableContainer">
-            <DropdownButton
-                title="Sort by"
-                variant="secondary"
-                className="DropdownButton"
-            >
-                <Dropdown.Item>First Name</Dropdown.Item>
-                <Dropdown.Item>Last Name</Dropdown.Item>
-                <Dropdown.Item>Age</Dropdown.Item>
-            </DropdownButton>
-            <Table striped bordered>
+            <div className="Dropdown">
+                <select id="sort">
+                    <option>Sort by:</option>
+                    <option>First Name</option>
+                    <option>Last Name</option>
+                    <option>Age</option>
+                </select>
+            </div>
+            <table>
                 <thead>
                     <tr>
                         <th></th>
@@ -37,18 +34,24 @@ function TableManager() {
                     {db.map((person, index) => (
                         <tr key={index}>
                             <td className="ButtonCell">
-                                <Button variant="primary">Edit</Button>
+                                <button>Edit</button>
                             </td>
-                            <td>{person.firstName}</td>
-                            <td>{person.lastName}</td>
-                            <td>{person.age}</td>
+                            <td>
+                                <span className="CellText">{person.firstName}</span>
+                            </td>
+                            <td>
+                                <span className="CellText">{person.lastName}</span>
+                            </td>
+                            <td>
+                                <span className="CellText">{person.age}</span>
+                            </td>
                             <td className="ButtonCell">
-                                <Button variant="danger">Delete</Button>
+                                <button>Delete</button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
-            </Table>
+            </table>
         </div>
     );
 }

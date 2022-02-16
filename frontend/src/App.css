@@ -1,16 +1,28 @@
 .TableContainer {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
     max-width: 1000px;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .TableContainer table {
     max-width: 1000px;
 }
+.Dropdown {
+    margin: 5px 0 0 10px;
+}
+th,
+td,
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+table {
+    margin: 0 10px;
+}
 .ButtonCell {
     width: 30px;
 }
-.DropdownButton {
-    margin: 10px;
+.CellText {
+    margin: 5px;
 }
