@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const people_1 = __importDefault(require("./routes/people"));
 const app = (0, express_1.default)();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
     console.log(`Listening on port ${server.address().port}`);
 });
