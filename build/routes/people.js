@@ -51,10 +51,9 @@ people.delete("/:id([0-9]+)", (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.status(500).send(err);
     }
 }));
-const postSchema = {
+const schema = {
     type: "object",
     properties: {
-        id: { type: "number", min: 0 },
         firstName: { type: "string" },
         lastName: { type: "string" },
         age: { type: "number" },
@@ -62,7 +61,7 @@ const postSchema = {
     required: ["firstName", "lastName", "age"],
 };
 people.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const validation = validator.validate(req.body, postSchema);
+    const validation = validator.validate(req.body, schema);
     if (validation.errors.length > 0) {
         res.status(400).send(validation.errors);
     }
@@ -76,15 +75,14 @@ people.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
 }));
-const patchSchema = Object.assign(Object.assign({}, postSchema), { required: [...postSchema.required, "id"] });
-people.patch("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const validation = validator.validate(req.body, patchSchema);
+people.put("/:id([0-9]+)", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const validation = validator.validate(req.body, schema);
     if (validation.errors.length > 0) {
         res.status(400).send(validation.errors);
     }
     else {
         try {
-            const info = (yield (0, crudrepository_1.update)(req.body.id, req.body.firstName, req.body.lastName, req.body.age));
+            const info = (yield (0, crudrepository_1.update)(Number(req.params.id), req.body.firstName, req.body.lastName, req.body.age));
             if (info.rowCount > 0) {
                 res.sendStatus(200);
             }
