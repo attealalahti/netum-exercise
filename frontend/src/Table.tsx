@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from "react";
 import axios from "axios";
 import getUrl from "./getUrl";
 
-const TableManager: FC = () => {
+const Table: FC = () => {
     interface Person {
         id: number;
         first_name: string;
@@ -97,4 +97,4 @@ const TableManager: FC = () => {
         );
     }
 };
-export default TableManager;
+export default Table;
