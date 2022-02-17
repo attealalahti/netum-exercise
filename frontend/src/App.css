@@ -26,3 +26,6 @@ table {
 .CellText {
     margin: 5px;
 }
+p {
+    text-align: center;
+}
