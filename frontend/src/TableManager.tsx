@@ -18,8 +18,8 @@ const TableManager: FC = () => {
 
     const fetchData = async () => {
         try {
-            const response = (await axios.get("/people")) as Person[];
-            setPeople(response);
+            const response = await axios.get("/people");
+            setPeople(response.data);
         } catch (err) {
             setError(true);
         } finally {
