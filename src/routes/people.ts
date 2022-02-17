@@ -5,27 +5,10 @@ const people = Router();
 import { Validator } from "jsonschema";
 const validator = new Validator();
 
-interface DatabasePerson {
-    id: number;
-    firstname: string;
-    lastname: string;
-    age: number;
-}
-function convertKeys(original: DatabasePerson) {
-    return {
-        id: original.id,
-        firstName: original.firstname,
-        lastName: original.lastname,
-        age: original.age,
-    };
-}
-
 people.get("/", async (req, res) => {
     try {
-        const all = (await findAll()) as DatabasePerson[];
-        const converted: object[] = [];
-        all.forEach((dbPerson) => converted.push(convertKeys(dbPerson)));
-        res.send(converted);
+        const all = await findAll();
+        res.send(all);
     } catch (err) {
         res.status(500).send(err);
     }
@@ -33,9 +16,9 @@ people.get("/", async (req, res) => {
 
 people.get("/:id([0-9]+)", async (req, res) => {
     try {
-        const person = (await findById(Number(req.params.id))) as DatabasePerson[];
+        const person = (await findById(Number(req.params.id))) as object[];
         if (person.length > 0) {
-            res.send(convertKeys(person[0]));
+            res.send(person[0]);
         } else {
             res.sendStatus(404);
         }
@@ -46,7 +29,7 @@ people.get("/:id([0-9]+)", async (req, res) => {
 
 people.delete("/:id([0-9]+)", async (req, res) => {
     try {
-        const info = (await deleteById(Number(req.params.id))) as any;
+        const info = (await deleteById(Number(req.params.id))) as { rowCount: number };
         if (info.rowCount > 0) {
             res.sendStatus(204);
         } else {
@@ -60,11 +43,11 @@ people.delete("/:id([0-9]+)", async (req, res) => {
 const schema = {
     type: "object",
     properties: {
-        firstName: { type: "string" },
-        lastName: { type: "string" },
+        first_name: { type: "string" },
+        last_name: { type: "string" },
         age: { type: "number" },
     },
-    required: ["firstName", "lastName", "age"],
+    required: ["first_name", "last_name", "age"],
 };
 
 people.post("/", async (req, res) => {

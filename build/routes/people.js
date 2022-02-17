@@ -14,20 +14,10 @@ const crudrepository_1 = require("../database/crudrepository");
 const people = (0, express_1.Router)();
 const jsonschema_1 = require("jsonschema");
 const validator = new jsonschema_1.Validator();
-function convertKeys(original) {
-    return {
-        id: original.id,
-        firstName: original.firstname,
-        lastName: original.lastname,
-        age: original.age,
-    };
-}
 people.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const all = (yield (0, crudrepository_1.findAll)());
-        const converted = [];
-        all.forEach((dbPerson) => converted.push(convertKeys(dbPerson)));
-        res.send(converted);
+        const all = yield (0, crudrepository_1.findAll)();
+        res.send(all);
     }
     catch (err) {
         res.status(500).send(err);
@@ -37,7 +27,7 @@ people.get("/:id([0-9]+)", (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const person = (yield (0, crudrepository_1.findById)(Number(req.params.id)));
         if (person.length > 0) {
-            res.send(convertKeys(person[0]));
+            res.send(person[0]);
         }
         else {
             res.sendStatus(404);
@@ -64,11 +54,11 @@ people.delete("/:id([0-9]+)", (req, res) => __awaiter(void 0, void 0, void 0, fu
 const schema = {
     type: "object",
     properties: {
-        firstName: { type: "string" },
-        lastName: { type: "string" },
+        first_name: { type: "string" },
+        last_name: { type: "string" },
         age: { type: "number" },
     },
-    required: ["firstName", "lastName", "age"],
+    required: ["first_name", "last_name", "age"],
 };
 people.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const validation = validator.validate(req.body, schema);

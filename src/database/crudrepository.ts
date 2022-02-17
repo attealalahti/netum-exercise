@@ -41,17 +41,17 @@ export const deleteById = (id: number) =>
         });
     });
 
-interface Person {
-    firstName: string;
-    lastName: string;
+export default interface Person {
+    first_name: string;
+    last_name: string;
     age: number;
 }
 
 export const save = (person: Person) =>
     new Promise((resolve, reject) => {
         pool.query(
-            "INSERT INTO people (firstname, lastname, age) VALUES ($1, $2, $3) RETURNING *",
-            [person.firstName, person.lastName, person.age],
+            "INSERT INTO people (first_name, last_name, age) VALUES ($1, $2, $3) RETURNING *",
+            [person.first_name, person.last_name, person.age],
             (err, res) => {
                 if (err) {
                     reject(err);
@@ -65,8 +65,8 @@ export const save = (person: Person) =>
 export const update = (person: Person, id: number) =>
     new Promise((resolve, reject) => {
         pool.query(
-            "UPDATE people SET firstname = $1, lastname = $2, age = $3 WHERE id = $4",
-            [person.firstName, person.lastName, person.age, id],
+            "UPDATE people SET first_name = $1, last_name = $2, age = $3 WHERE id = $4",
+            [person.first_name, person.last_name, person.age, id],
             (err, res) => {
                 if (err) {
                     reject(err);
