@@ -14,10 +14,20 @@ const crudrepository_1 = require("../database/crudrepository");
 const people = (0, express_1.Router)();
 const jsonschema_1 = require("jsonschema");
 const validator = new jsonschema_1.Validator();
+function convertKeys(original) {
+    return {
+        id: original.id,
+        firstName: original.firstname,
+        lastName: original.lastname,
+        age: original.age,
+    };
+}
 people.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const all = yield (0, crudrepository_1.findAll)();
-        res.send(all);
+        const all = (yield (0, crudrepository_1.findAll)());
+        const converted = [];
+        all.forEach((dbPerson) => converted.push(convertKeys(dbPerson)));
+        res.send(converted);
     }
     catch (err) {
         res.status(500).send(err);
@@ -27,7 +37,7 @@ people.get("/:id([0-9]+)", (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const person = (yield (0, crudrepository_1.findById)(Number(req.params.id)));
         if (person.length > 0) {
-            res.send(person[0]);
+            res.send(convertKeys(person[0]));
         }
         else {
             res.sendStatus(404);

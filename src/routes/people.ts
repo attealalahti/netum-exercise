@@ -5,10 +5,27 @@ const people = Router();
 import { Validator } from "jsonschema";
 const validator = new Validator();
 
+interface DatabasePerson {
+    id: number;
+    firstname: string;
+    lastname: string;
+    age: number;
+}
+function convertKeys(original: DatabasePerson) {
+    return {
+        id: original.id,
+        firstName: original.firstname,
+        lastName: original.lastname,
+        age: original.age,
+    };
+}
+
 people.get("/", async (req, res) => {
     try {
-        const all = await findAll();
-        res.send(all);
+        const all = (await findAll()) as DatabasePerson[];
+        const converted: object[] = [];
+        all.forEach((dbPerson) => converted.push(convertKeys(dbPerson)));
+        res.send(converted);
     } catch (err) {
         res.status(500).send(err);
     }
@@ -16,9 +33,9 @@ people.get("/", async (req, res) => {
 
 people.get("/:id([0-9]+)", async (req, res) => {
     try {
-        const person = (await findById(Number(req.params.id))) as object[];
+        const person = (await findById(Number(req.params.id))) as DatabasePerson[];
         if (person.length > 0) {
-            res.send(person[0]);
+            res.send(convertKeys(person[0]));
         } else {
             res.sendStatus(404);
         }
