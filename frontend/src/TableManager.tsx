@@ -1,5 +1,6 @@
 import { FC, useState, useEffect } from "react";
 import axios from "axios";
+import getUrl from "./getUrl";
 
 const TableManager: FC = () => {
     interface Person {
@@ -18,7 +19,7 @@ const TableManager: FC = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("/people");
+            const response = await axios.get(`${getUrl()}/people`);
             setPeople(response.data);
         } catch (err) {
             setError(true);
