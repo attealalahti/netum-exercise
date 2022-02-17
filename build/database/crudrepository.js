@@ -45,8 +45,8 @@ const deleteById = (id) => new Promise((resolve, reject) => {
     });
 });
 exports.deleteById = deleteById;
-const save = (firstName, lastName, age) => new Promise((resolve, reject) => {
-    pool.query("INSERT INTO people (firstname, lastname, age) VALUES ($1, $2, $3) RETURNING *", [firstName, lastName, age], (err, res) => {
+const save = (person) => new Promise((resolve, reject) => {
+    pool.query("INSERT INTO people (firstname, lastname, age) VALUES ($1, $2, $3) RETURNING *", [person.firstName, person.lastName, person.age], (err, res) => {
         if (err) {
             reject(err);
         }
@@ -56,8 +56,8 @@ const save = (firstName, lastName, age) => new Promise((resolve, reject) => {
     });
 });
 exports.save = save;
-const update = (id, firstName, lastName, age) => new Promise((resolve, reject) => {
-    pool.query("UPDATE people SET firstname = $1, lastname = $2, age = $3 WHERE id = $4", [firstName, lastName, age, id], (err, res) => {
+const update = (person, id) => new Promise((resolve, reject) => {
+    pool.query("UPDATE people SET firstname = $1, lastname = $2, age = $3 WHERE id = $4", [person.firstName, person.lastName, person.age, id], (err, res) => {
         if (err) {
             reject(err);
         }

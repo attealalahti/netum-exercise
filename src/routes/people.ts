@@ -56,11 +56,7 @@ people.post("/", async (req, res) => {
         res.status(400).send(validation.errors);
     } else {
         try {
-            const person = await save(
-                req.body.firstName,
-                req.body.lastName,
-                req.body.age
-            );
+            const person = await save(req.body);
             res.status(201).send(person);
         } catch (err) {
             res.status(500).send(err);
@@ -74,12 +70,7 @@ people.put("/:id([0-9]+)", async (req, res) => {
         res.status(400).send(validation.errors);
     } else {
         try {
-            const info = (await update(
-                Number(req.params.id),
-                req.body.firstName,
-                req.body.lastName,
-                req.body.age
-            )) as any;
+            const info = (await update(req.body, Number(req.params.id))) as any;
             if (info.rowCount > 0) {
                 res.sendStatus(200);
             } else {

@@ -67,7 +67,7 @@ people.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     else {
         try {
-            const person = yield (0, crudrepository_1.save)(req.body.firstName, req.body.lastName, req.body.age);
+            const person = yield (0, crudrepository_1.save)(req.body);
             res.status(201).send(person);
         }
         catch (err) {
@@ -82,7 +82,7 @@ people.put("/:id([0-9]+)", (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
     else {
         try {
-            const info = (yield (0, crudrepository_1.update)(Number(req.params.id), req.body.firstName, req.body.lastName, req.body.age));
+            const info = (yield (0, crudrepository_1.update)(req.body, Number(req.params.id)));
             if (info.rowCount > 0) {
                 res.sendStatus(200);
             }
