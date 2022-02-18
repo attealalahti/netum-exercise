@@ -68,6 +68,43 @@ const Table: FC = () => {
             setError(true);
         }
     };
+    const sort = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        event.preventDefault();
+        let sorted = Array.from(people);
+        switch (event.target.value) {
+            case "first_name":
+                sorted = sorted.sort((a, b) => {
+                    const first_name_a = a.first_name.toUpperCase();
+                    const first_name_b = b.first_name.toUpperCase();
+                    if (first_name_a < first_name_b) {
+                        return -1;
+                    } else if (first_name_a > first_name_b) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                });
+                break;
+            case "last_name":
+                sorted = sorted.sort((a, b) => {
+                    const last_name_a = a.last_name.toUpperCase();
+                    const last_name_b = b.last_name.toUpperCase();
+                    if (last_name_a < last_name_b) {
+                        return -1;
+                    } else if (last_name_a > last_name_b) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                });
+                break;
+            case "age":
+                sorted = sorted.sort((a, b) => a.age - b.age);
+                break;
+        }
+        setPeople(sorted);
+        event.target.value = "default";
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -77,11 +114,11 @@ const Table: FC = () => {
         return (
             <div className="TableContainer">
                 <div className="Dropdown">
-                    <select id="sort">
-                        <option>Sort by:</option>
-                        <option>First Name</option>
-                        <option>Last Name</option>
-                        <option>Age</option>
+                    <select id="sort" onChange={sort} disabled={editing}>
+                        <option value="default">Sort by:</option>
+                        <option value="first_name">First Name</option>
+                        <option value="last_name">Last Name</option>
+                        <option value="age">Age</option>
                     </select>
                 </div>
                 <table>
