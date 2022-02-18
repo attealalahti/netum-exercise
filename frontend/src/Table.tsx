@@ -6,8 +6,9 @@ import Person from "./Person";
 
 const Table: FC = () => {
     const [people, setPeople] = useState<Person[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<boolean>(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [editing, setEditing] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -86,6 +87,8 @@ const Table: FC = () => {
                                 key={person.id}
                                 person={person}
                                 onDelete={deletePerson}
+                                editing={editing}
+                                setEditing={setEditing}
                             />
                         ))}
                     </tbody>
