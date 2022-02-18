@@ -55,6 +55,17 @@ const Table: FC = () => {
             setError(true);
         }
     };
+    const editPerson = async (editedPerson: Person) => {
+        try {
+            await axios.put(`${getUrl()}/people/${editedPerson.id}`, editedPerson);
+            const index = people.findIndex((person) => person.id === editedPerson.id);
+            const newPeople = Array.from(people);
+            newPeople.splice(index, 1, editedPerson);
+            setPeople(newPeople);
+        } catch (err) {
+            setError(true);
+        }
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -89,6 +100,7 @@ const Table: FC = () => {
                                 onDelete={deletePerson}
                                 editing={editing}
                                 setEditing={setEditing}
+                                onSave={editPerson}
                             />
                         ))}
                     </tbody>

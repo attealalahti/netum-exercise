@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useRef } from "react";
 import Person from "./Person";
 
 interface Props {
@@ -6,9 +6,13 @@ interface Props {
     onDelete: (id: number) => void;
     editing: boolean;
     setEditing: (value: boolean) => void;
+    onSave: (newPerson: Person) => void;
 }
 const Row: FC<Props> = (props) => {
     const [editingThis, setEditingThis] = useState(false);
+    const firstNameInput = useRef<HTMLInputElement>(null);
+    const lastNameInput = useRef<HTMLInputElement>(null);
+    const ageInput = useRef<HTMLInputElement>(null);
 
     const handleDelete = () => {
         if (!props.editing) {
@@ -22,6 +26,17 @@ const Row: FC<Props> = (props) => {
             setEditingThis(true);
         }
     };
+    const saveEdit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const editedPerson: Person = {
+            id: props.person.id,
+            first_name: (firstNameInput.current as HTMLInputElement).value,
+            last_name: (lastNameInput.current as HTMLInputElement).value,
+            age: Number((ageInput.current as HTMLInputElement).value),
+        };
+        await props.onSave(editedPerson);
+        stopEditing();
+    };
     const stopEditing = () => {
         props.setEditing(false);
         setEditingThis(false);
@@ -31,16 +46,36 @@ const Row: FC<Props> = (props) => {
         return (
             <tr>
                 <td className="ButtonCell">
-                    <button className="Green">Save</button>
+                    <form id="editForm" onSubmit={saveEdit}>
+                        <input className="Green" type="submit" value="Save" />
+                    </form>
                 </td>
                 <td>
-                    <input className="EditInput" defaultValue={props.person.first_name} />
+                    <input
+                        form="editForm"
+                        type="text"
+                        className="EditInput"
+                        defaultValue={props.person.first_name}
+                        ref={firstNameInput}
+                    />
                 </td>
                 <td>
-                    <input className="EditInput" defaultValue={props.person.last_name} />
+                    <input
+                        form="editForm"
+                        type="text"
+                        className="EditInput"
+                        defaultValue={props.person.last_name}
+                        ref={lastNameInput}
+                    />
                 </td>
                 <td className="AgeCell">
-                    <input className="EditInput" defaultValue={props.person.age} />
+                    <input
+                        form="editForm"
+                        type="number"
+                        className="EditInput"
+                        defaultValue={props.person.age}
+                        ref={ageInput}
+                    />
                 </td>
                 <td className="ButtonCell">
                     <button className="Blue" onClick={stopEditing}>
@@ -52,7 +87,6 @@ const Row: FC<Props> = (props) => {
     } else {
         return (
             <tr>
-                <form />
                 <td className="ButtonCell">
                     <button
                         className={props.editing && !editingThis ? "Gray" : "Blue"}
