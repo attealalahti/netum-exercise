@@ -79,15 +79,15 @@ const Table: FC = () => {
                     <b>Add new person:</b>
                     <div className="AddPersonInput">
                         <label htmlFor="first_name">First name:</label>
-                        <input type="text" id="first_name" />
+                        <input type="text" id="first_name" required />
                     </div>
                     <div className="AddPersonInput">
                         <label htmlFor="last_name">Last name:</label>
-                        <input type="text" id="last_name" />
+                        <input type="text" id="last_name" required />
                     </div>
                     <div className="AddPersonInput">
                         <label htmlFor="age">Age:</label>
-                        <input type="text" id="age" />
+                        <input type="number" id="age" required />
                     </div>
                     <div>
                         <input type="submit" value="Add" />
