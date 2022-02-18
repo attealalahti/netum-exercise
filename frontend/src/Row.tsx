@@ -1,4 +1,4 @@
-import { FC, useState, useRef } from "react";
+import { FC, useState } from "react";
 import Person from "./Person";
 
 interface Props {
@@ -10,9 +10,9 @@ interface Props {
 }
 const Row: FC<Props> = (props) => {
     const [editingThis, setEditingThis] = useState(false);
-    const firstNameInput = useRef<HTMLInputElement>(null);
-    const lastNameInput = useRef<HTMLInputElement>(null);
-    const ageInput = useRef<HTMLInputElement>(null);
+    const [firstNameInput, setFirstNameInput] = useState(props.person.first_name);
+    const [lastNameInput, setLastNameInput] = useState(props.person.last_name);
+    const [ageInput, setAgeInput] = useState(props.person.age);
 
     const startEditing = () => {
         props.setEditing(true);
@@ -22,9 +22,9 @@ const Row: FC<Props> = (props) => {
         event.preventDefault();
         const editedPerson: Person = {
             id: props.person.id,
-            first_name: (firstNameInput.current as HTMLInputElement).value,
-            last_name: (lastNameInput.current as HTMLInputElement).value,
-            age: Number((ageInput.current as HTMLInputElement).value),
+            first_name: firstNameInput,
+            last_name: lastNameInput,
+            age: ageInput,
         };
         await props.onSave(editedPerson);
         stopEditing();
@@ -48,7 +48,7 @@ const Row: FC<Props> = (props) => {
                         type="text"
                         className="EditInput"
                         defaultValue={props.person.first_name}
-                        ref={firstNameInput}
+                        onChange={(e) => setFirstNameInput(e.target.value)}
                     />
                 </td>
                 <td>
@@ -57,7 +57,7 @@ const Row: FC<Props> = (props) => {
                         type="text"
                         className="EditInput"
                         defaultValue={props.person.last_name}
-                        ref={lastNameInput}
+                        onChange={(e) => setLastNameInput(e.target.value)}
                     />
                 </td>
                 <td className="AgeCell">
@@ -66,7 +66,7 @@ const Row: FC<Props> = (props) => {
                         type="number"
                         className="EditInput"
                         defaultValue={props.person.age}
-                        ref={ageInput}
+                        onChange={(e) => setAgeInput(Number(e.target.value))}
                     />
                 </td>
                 <td className="ButtonCell">
