@@ -1,3 +1,6 @@
+* {
+    font-size: 18px;
+}
 .TableContainer {
     max-width: 1000px;
     margin: auto;
@@ -20,6 +23,9 @@ table {
 table {
     margin: 0 10px;
 }
+td {
+    width: 30%;
+}
 .ButtonCell {
     width: 45px;
 }
@@ -34,6 +40,7 @@ p {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .AddPersonInput {
     margin: 0 0 0 15px;
@@ -47,12 +54,19 @@ input#age {
     width: 50px;
     margin: 0 15px 0 5px;
 }
+.EditInput {
+    box-sizing: border-box;
+    width: 90%;
+    margin-left: 6px;
+    font-size: 16px;
+}
 /* Buttons */
 button,
 input[type="submit"] {
     color: white;
     padding: 10px 12px;
     font-size: 16px;
+    width: 80px;
 }
 .Green {
     background-color: rgb(25, 167, 25);
@@ -61,10 +75,10 @@ input[type="submit"] {
     background-color: rgb(14, 145, 14);
 }
 .Red {
-    background-color: rgb(240, 45, 11);
+    background-color: rgb(230, 24, 9);
 }
 .Red:hover {
-    background-color: rgb(182, 37, 12);
+    background-color: rgb(180, 16, 16);
 }
 .Blue {
     background-color: rgb(19, 76, 231);
