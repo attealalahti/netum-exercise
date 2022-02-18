@@ -1,14 +1,10 @@
 import React, { FC, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import getUrl from "./getUrl";
+import Row from "./Row";
+import Person from "./Person";
 
 const Table: FC = () => {
-    interface Person {
-        id: number;
-        first_name: string;
-        last_name: string;
-        age: number;
-    }
     const [people, setPeople] = useState<Person[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<boolean>(false);
@@ -77,23 +73,7 @@ const Table: FC = () => {
                     </thead>
                     <tbody>
                         {people.map((person) => (
-                            <tr key={person.id}>
-                                <td className="ButtonCell">
-                                    <button>Edit</button>
-                                </td>
-                                <td>
-                                    <span className="CellText">{person.first_name}</span>
-                                </td>
-                                <td>
-                                    <span className="CellText">{person.last_name}</span>
-                                </td>
-                                <td>
-                                    <span className="CellText">{person.age}</span>
-                                </td>
-                                <td className="ButtonCell">
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
+                            <Row key={person.id} person={person} />
                         ))}
                     </tbody>
                 </table>
