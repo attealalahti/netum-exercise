@@ -168,6 +168,7 @@ const Table: FC = () => {
                             type="submit"
                             value="Add"
                             className={editing ? "Gray" : "Green"}
+                            disabled={editing}
                         />
                     </div>
                 </form>

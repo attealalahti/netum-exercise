@@ -14,17 +14,9 @@ const Row: FC<Props> = (props) => {
     const lastNameInput = useRef<HTMLInputElement>(null);
     const ageInput = useRef<HTMLInputElement>(null);
 
-    const handleDelete = () => {
-        if (!props.editing) {
-            props.onDelete(props.person.id);
-        }
-    };
-
     const startEditing = () => {
-        if (!props.editing) {
-            props.setEditing(true);
-            setEditingThis(true);
-        }
+        props.setEditing(true);
+        setEditingThis(true);
     };
     const saveEdit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -89,8 +81,9 @@ const Row: FC<Props> = (props) => {
             <tr>
                 <td className="ButtonCell">
                     <button
-                        className={props.editing && !editingThis ? "Gray" : "Blue"}
+                        className={props.editing ? "Gray" : "Blue"}
                         onClick={startEditing}
+                        disabled={props.editing}
                     >
                         Edit
                     </button>
@@ -107,7 +100,8 @@ const Row: FC<Props> = (props) => {
                 <td className="ButtonCell">
                     <button
                         className={props.editing ? "Gray" : "Red"}
-                        onClick={handleDelete}
+                        onClick={() => props.onDelete(props.person.id)}
+                        disabled={props.editing}
                     >
                         Delete
                     </button>
