@@ -45,6 +45,15 @@ const Table: FC = () => {
             setError(true);
         }
     };
+    const deletePerson = async (id: number) => {
+        try {
+            await axios.delete(`${getUrl()}/people/${id}`);
+            const newPeople = people.filter((person) => person.id !== id);
+            setPeople(newPeople);
+        } catch (err) {
+            setError(true);
+        }
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -73,7 +82,11 @@ const Table: FC = () => {
                     </thead>
                     <tbody>
                         {people.map((person) => (
-                            <Row key={person.id} person={person} />
+                            <Row
+                                key={person.id}
+                                person={person}
+                                onDelete={deletePerson}
+                            />
                         ))}
                     </tbody>
                 </table>

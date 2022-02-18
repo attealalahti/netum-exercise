@@ -3,6 +3,7 @@ import Person from "./Person";
 
 interface Props {
     person: Person;
+    onDelete: (id: number) => void;
 }
 const Row: FC<Props> = (props) => {
     return (
@@ -20,7 +21,7 @@ const Row: FC<Props> = (props) => {
                 <span className="CellText">{props.person.age}</span>
             </td>
             <td className="ButtonCell">
-                <button>Delete</button>
+                <button onClick={() => props.onDelete(props.person.id)}>Delete</button>
             </td>
         </tr>
     );
