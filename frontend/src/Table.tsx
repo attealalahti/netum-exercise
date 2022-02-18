@@ -31,19 +31,21 @@ const Table: FC = () => {
 
     const addPerson = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        try {
-            const input = {
-                first_name: firstNameInput.current?.value,
-                last_name: lastNameInput.current?.value,
-                age: Number(ageInput.current?.value),
-            };
-            const newPerson = await axios.post(`${getUrl()}/people`, input);
-            setPeople([...people, newPerson.data]);
-            (firstNameInput.current as HTMLInputElement).value = "";
-            (lastNameInput.current as HTMLInputElement).value = "";
-            (ageInput.current as HTMLInputElement).value = "";
-        } catch (err) {
-            setError(true);
+        if (!editing) {
+            try {
+                const input = {
+                    first_name: firstNameInput.current?.value,
+                    last_name: lastNameInput.current?.value,
+                    age: Number(ageInput.current?.value),
+                };
+                const newPerson = await axios.post(`${getUrl()}/people`, input);
+                setPeople([...people, newPerson.data]);
+                (firstNameInput.current as HTMLInputElement).value = "";
+                (lastNameInput.current as HTMLInputElement).value = "";
+                (ageInput.current as HTMLInputElement).value = "";
+            } catch (err) {
+                setError(true);
+            }
         }
     };
     const deletePerson = async (id: number) => {
