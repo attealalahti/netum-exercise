@@ -94,7 +94,7 @@ const Table: FC = () => {
                     </tbody>
                 </table>
                 <form className="AddPerson" onSubmit={addPerson}>
-                    <b>Add new person:</b>
+                    <b className="AddPersonInput">Add new person:</b>
                     <div className="AddPersonInput">
                         <label htmlFor="first_name">First name:</label>
                         <input
@@ -113,7 +113,11 @@ const Table: FC = () => {
                         <input type="number" id="age" required ref={ageInput} />
                     </div>
                     <div>
-                        <input type="submit" value="Add" />
+                        <input
+                            type="submit"
+                            value="Add"
+                            className={editing ? "Gray" : "Green"}
+                        />
                     </div>
                 </form>
             </div>

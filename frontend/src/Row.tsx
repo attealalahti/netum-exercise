@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Person from "./Person";
 
 interface Props {
@@ -8,6 +8,8 @@ interface Props {
     setEditing: (value: boolean) => void;
 }
 const Row: FC<Props> = (props) => {
+    const [editingThis, setEditingThis] = useState(false);
+
     const handleDelete = () => {
         if (!props.editing) {
             props.onDelete(props.person.id);
@@ -17,7 +19,9 @@ const Row: FC<Props> = (props) => {
     return (
         <tr>
             <td className="ButtonCell">
-                <button>Edit</button>
+                <button className={props.editing && !editingThis ? "Gray" : "Blue"}>
+                    Edit
+                </button>
             </td>
             <td>
                 <span className="CellText">{props.person.first_name}</span>
@@ -29,7 +33,9 @@ const Row: FC<Props> = (props) => {
                 <span className="CellText">{props.person.age}</span>
             </td>
             <td className="ButtonCell">
-                <button onClick={handleDelete}>Delete</button>
+                <button className={props.editing ? "Gray" : "Red"} onClick={handleDelete}>
+                    Delete
+                </button>
             </td>
         </tr>
     );

@@ -21,7 +21,7 @@ table {
     margin: 0 10px;
 }
 .ButtonCell {
-    width: 30px;
+    width: 45px;
 }
 .CellText {
     margin: 5px;
@@ -37,6 +37,7 @@ p {
 }
 .AddPersonInput {
     margin: 0 0 0 15px;
+    line-height: 40px;
 }
 .AddPersonInput input {
     width: 120px;
@@ -45,4 +46,33 @@ p {
 input#age {
     width: 50px;
     margin: 0 15px 0 5px;
+}
+/* Buttons */
+button,
+input[type="submit"] {
+    color: white;
+    padding: 10px 12px;
+    font-size: 16px;
+}
+.Green {
+    background-color: rgb(25, 167, 25);
+}
+.Green:hover {
+    background-color: rgb(14, 145, 14);
+}
+.Red {
+    background-color: rgb(240, 45, 11);
+}
+.Red:hover {
+    background-color: rgb(182, 37, 12);
+}
+.Blue {
+    background-color: rgb(19, 76, 231);
+}
+.Blue:hover {
+    background-color: rgb(20, 64, 187);
+}
+.Gray {
+    background-color: gray;
+    border: 2px solid rgb(151, 151, 151);
 }
