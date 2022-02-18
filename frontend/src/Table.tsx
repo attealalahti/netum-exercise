@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import getUrl from "./getUrl";
 
@@ -25,6 +25,28 @@ const Table: FC = () => {
             setError(true);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const firstNameInput = useRef<HTMLInputElement>(null);
+    const lastNameInput = useRef<HTMLInputElement>(null);
+    const ageInput = useRef<HTMLInputElement>(null);
+
+    const addPerson = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        try {
+            const input = {
+                first_name: firstNameInput.current?.value,
+                last_name: lastNameInput.current?.value,
+                age: Number(ageInput.current?.value),
+            };
+            const newPerson = await axios.post(`${getUrl()}/people`, input);
+            setPeople([...people, newPerson.data]);
+            (firstNameInput.current as HTMLInputElement).value = "";
+            (lastNameInput.current as HTMLInputElement).value = "";
+            (ageInput.current as HTMLInputElement).value = "";
+        } catch (err) {
+            setError(true);
         }
     };
 
@@ -75,19 +97,24 @@ const Table: FC = () => {
                         ))}
                     </tbody>
                 </table>
-                <form className="AddPerson">
+                <form className="AddPerson" onSubmit={addPerson}>
                     <b>Add new person:</b>
                     <div className="AddPersonInput">
                         <label htmlFor="first_name">First name:</label>
-                        <input type="text" id="first_name" required />
+                        <input
+                            type="text"
+                            id="first_name"
+                            required
+                            ref={firstNameInput}
+                        />
                     </div>
                     <div className="AddPersonInput">
                         <label htmlFor="last_name">Last name:</label>
-                        <input type="text" id="last_name" required />
+                        <input type="text" id="last_name" required ref={lastNameInput} />
                     </div>
                     <div className="AddPersonInput">
                         <label htmlFor="age">Age:</label>
-                        <input type="number" id="age" required />
+                        <input type="number" id="age" required ref={ageInput} />
                     </div>
                     <div>
                         <input type="submit" value="Add" />
