@@ -35,6 +35,9 @@ td {
 p {
     text-align: center;
 }
+select {
+    margin: 5px 0;
+}
 .AddPerson {
     margin: 10px;
     display: flex;
