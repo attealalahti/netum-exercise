@@ -6,7 +6,7 @@ interface Props {
     onDelete: (id: number) => void;
     editing: boolean;
     setEditing: (value: boolean) => void;
-    onSave: (newPerson: Person) => void;
+    onSave: (editedPerson: Person) => void;
 }
 const Row: FC<Props> = (props) => {
     const [editingThis, setEditingThis] = useState(false);
