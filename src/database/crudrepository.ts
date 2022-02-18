@@ -10,7 +10,7 @@ const pool = new Pool({
 
 export const findAll = () =>
     new Promise((resolve, reject) => {
-        pool.query("SELECT * FROM people", (err, res) => {
+        pool.query("SELECT * FROM people ORDER BY id", (err, res) => {
             if (err) {
                 reject(err);
             } else {
