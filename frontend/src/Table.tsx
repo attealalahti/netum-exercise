@@ -12,7 +12,7 @@ const Table: FC = () => {
 
     useEffect(() => {
         fetchData();
-    });
+    }, []);
 
     const fetchData = async () => {
         try {
