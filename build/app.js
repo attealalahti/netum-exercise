@@ -12,4 +12,4 @@ const server = app.listen(port, () => {
 });
 app.use(express_1.default.json());
 app.use("/people", people_1.default);
-app.use(express_1.default.static("../frontend/build"));
+app.use(express_1.default.static("frontend/build"));
